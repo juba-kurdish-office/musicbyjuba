@@ -26,7 +26,7 @@ client.guilds.cache.forEach((guild) => {
         const embed = new MessageEmbed()
             .setColor(message.client.embedColor)
             .setThumbnail(message.client.user.displayAvatarURL())
-            .setDescription(`**Application Information**\n❯ **Creator**: <@637299944939585576>\n❯ **Guilds**: ${scount}\n❯ **Discord.js**: v${version}\n❯ **Uptime**: ${duration1}\n❯ **Speed**: ${os.cpus()[0].speed} MHz\n❯ **Memory**: ${(os.totalmem() / 1024 / 1024).toFixed(2)} Mbps`)
+            .setDescription(`**Application Information**\n❯ **Creator**: <@730549617044750346>\n❯ **Guilds**: ${scount}\n❯ **Discord.js**: v${version}\n❯ **Uptime**: ${duration1}\n❯ **Speed**: ${os.cpus()[0].speed} MHz\n❯ **Memory**: ${(os.totalmem() / 1024 / 1024).toFixed(2)} Mbps`)
          message.reply({embeds: [embed]});
     }
 	}
