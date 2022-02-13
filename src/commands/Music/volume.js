@@ -34,10 +34,10 @@ module.exports = {
 
 		const volume = Number(args[0]);
 		
-		if (!volume || volume < 0 || volume > 100) { 
+		if (!volume || volume < 0 || volume > 200) { 
 			let thing = new MessageEmbed()
                 .setColor("RED")
-				.setDescription(`Usage: ${prefix}volume <Number of volume between 0 - 100>`)
+				.setDescription(`Usage: ${prefix}volume <Number of volume between 0 - 200>`)
             return message.reply({embeds: [thing]});
 		}
 
