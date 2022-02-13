@@ -30,7 +30,7 @@ module.exports = {
     if (!player.queue.current) return await interaction.editReply({embeds: [new MessageEmbed().setColor(client.embedColor).setDescription(`There is no music playing.`)]
     }).catch(() => {});
   const volume = Number(vol);
-		if (!volume || volume < 0 || volume > 100) return await interaction.editReply({embeds: [new MessageEmbed().setColor(client.embedColor).setDescription(`Usage: ${client.prefix}volume <Number of volume between 0 - 100>`)]
+		if (!volume || volume < 0 || volume > 200) return await interaction.editReply({embeds: [new MessageEmbed().setColor(client.embedColor).setDescription(`Usage: ${client.prefix}volume <Number of volume between 0 - 200>`)]
     }).catch(() => {});
 
    player.setVolume(volume);   
