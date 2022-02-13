@@ -1,14 +1,30 @@
-const { prefix } = require("../../config.js");
+const figlet = require('figlet');
+const { PREFIX } = require('../../config.json');
+const chalk = require('chalk');
 
 module.exports = async (client) => {
     client.manager.init(client.user.id);
-    client.logger.log(`${client.user.username} online!`, "ready");
-    client.logger.log(`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`, "ready");
-    //Game
-    let statuses = ['/help - by mix music', `${prefix}help Created by juba`];
-    setInterval(function() {
-  		let status = statuses[Math.floor(Math.random()*statuses.length)];
-  		client.user.setActivity(status, {type: "PLAYING"});
-  	}, 10000)
+    figlet(client.user.tag, function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(chalk.red.bold(data));
+    });
 
-}
+    let guilds = client.guilds.cache.size;
+    let users = client.users.cache.size;
+    let channels = client.channels.cache.size;
+
+    const activities = [
+        `${PREFIX}help | ${guilds} servers`,
+        `${PREFIX}play <input> | ${users} users`,
+        `${PREFIX}doubletime | ${channels} channels`,
+    ]
+
+    setInterval(() => {
+        client.user.setActivity(`${activities[Math.floor(Math.random() * activities.length)]}`, { type: 'WATCHING' });
+    }, 15000)
+
+};
