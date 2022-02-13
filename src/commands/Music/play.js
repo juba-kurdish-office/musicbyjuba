@@ -34,7 +34,7 @@ module.exports = {
       voiceChannel: message.member.voice.channel.id,
       textChannel: message.channel.id,
       selfDeafen: false,
-      volume: 50,
+      volume: 110,
     });
     
     if (player.state != "CONNECTED") await player.connect();
