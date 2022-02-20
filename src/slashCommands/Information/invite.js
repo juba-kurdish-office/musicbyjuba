@@ -12,6 +12,7 @@ module.exports = {
          const mainPage = new MessageEmbed()
              .setColor(client.embedColor)
             .setDescription(`Support my bot join to your server
+ ==========
  [Link bot here](https://discord.com/api/oauth2/authorize?client_id=862989897954623500&permissions=1634503490528&scope=bot%20applications.commands)`)
            await interaction.followUp({embeds: [mainPage]})
     }
