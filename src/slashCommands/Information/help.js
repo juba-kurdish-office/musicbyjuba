@@ -1,22 +1,81 @@
 const { MessageEmbed, MessageActionRow, MessageButton, CommandInteraction, Client } = require("discord.js");
 
 module.exports = {
-    name: "help",
-    description: "Replies with help on how to use this bot",
-    owner: false,
+        .setName("help")
+		.setDescription("List all commands of bot"),
 
+	async execute(interaction) {
+		const commands = interaction.client.slashCommands;
+		const client = interaction.client;
 
-    run: async (client, interaction, prefix) => {
-        await interaction.deferReply({
-          ephemeral: false
-        });
-  const embed = new MessageEmbed()
-    .setTitle("**mix music - Help Menu**")
-    .setDescription(`Created By <@730549617044750346> if you need help join our [Community](https://discord.gg/MXhMbtQ5)`)
-    .addField("İnformation","`setprefix`, `invite`, `status`") 
-    .addField("Music","`play`, `skip`, `stop`, `pause`, `resume`, `shuffle`, `seek`, `skipto`, `loop`, `remove`, `queue`, `filters`, `nowplaying`, `clearqueue`, `24/7`, `leave`") 
-    .addField("Filter","`party`, `bass`, `radio`, `pop`, `trablebass`, `soft`, `custom`, `off`")
-    .setColor("RANDOM")
-   await interaction.followUp({embeds: [embed]})
-  }
-}
+		const embed = new MessageEmbed()
+        .setTitle(`Commands of ${client.user.username}`)
+        .setColor('#2F3136')
+        .setDescription('**Please Select a category to view all its commands**')
+        .addField('INFORMATION',`[**ARBOTIX DEVELOPMENT**](https://discord.gg/7wmb5x7qp4)\n[**HJ GAMING**](https://discord.gg/7wmb5x7qp4)`,)
+        .setTimestamp()
+        .setFooter(`Requested by ${interaction.user.username} | Arbotix Devlopment`, interaction.user.displayAvatarURL());
+        
+          const giveaway = new MessageEmbed()
+          .setTitle("Categories » MUSIC")
+          .setColor('#2F3136')
+          .setDescription("```yaml\nHere are the music commands:```")
+          .addFields({ name: 'MUSIC COMMAND'  , value: `8D , autoplay , bassboost , clearqueue , earrape , jump , leave , lyrics , nowplaying , pause , play , previous , queue , repeat , requester , resume , reverse , save , seek , shuffle , skip , stop , volume`, inline: true }, )
+          .setTimestamp()
+          .setFooter(`Requested by ${interaction.user.username} | Arbotix Devlopment`, interaction.user.displayAvatarURL());
+        
+        
+          const general = new MessageEmbed()
+          .setTitle("Categories » INFORMATION")
+          .setColor('#2F3136')
+          .setDescription("```yaml\nHere are the information bot commands:```")
+          .addFields({ name: 'INFO COMMAND'  , value: `help , dj_role , commands_channel , reset_commandschannel , eval , blacklist_role`, inline: true },)
+          .setTimestamp()
+          .setFooter(`Requested by ${interaction.user.username} | Arbotix Development`, interaction.user.displayAvatarURL());
+        
+          const components = (state) => [
+            new MessageActionRow().addComponents(
+                new MessageSelectMenu()
+                .setCustomId("help-menu")
+                .setPlaceholder("Please Select a Category")
+                .setDisabled(state)
+                .addOptions([{
+                        label: `MUSIC COMMAND`,
+                        value: `giveaway`,
+                        description: `View all the music based commands!`,
+                        emoji: `<a:logo:916545532741173278>`
+                    },
+                    {
+                        label: `INFORMATION COMMAND`,
+                        value: `general`,
+                        description: `View all the INFORMATION bot commands!`,
+                        emoji: `<:667737932035129344:916560642234794015>`
+                    }
+                ])
+            ),
+        ];
+        
+        const initialMessage = await interaction.editReply({ embeds: [embed], components: components(false) });
+        
+        const filter = (interaction) => interaction.user.id === interaction.member.id;
+        
+                const collector = interaction.channel.createMessageComponentCollector(
+                    {
+                        filter,
+                        componentType: "SELECT_MENU",
+                        time: 300000
+                    });
+        
+                collector.on('collect', (interaction) => {
+                    if (interaction.values[0] === "giveaway") {
+                        interaction.update({ embeds: [giveaway], components: components(false) });
+                    } else if (interaction.values[0] === "general") {
+                        interaction.update({ embeds: [general], components: components(false) });
+                    }
+                });
+                collector.on('end', () => {
+                  initialMessage.edit({ components: components(true) });
+              }
+              )
+    },
+};
